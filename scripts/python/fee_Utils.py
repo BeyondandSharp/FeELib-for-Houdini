@@ -3,7 +3,7 @@
 
 import hou
 import os
-import PySide2
+import PySide6
 
 
 # import fee_Utils
@@ -43,7 +43,10 @@ def setClipboardText(text):
     win32clipboard.SetClipboardText(path)
     win32clipboard.CloseClipboard()
     '''
-    clipboard = PySide2.QtWidgets.QApplication.clipboard()
+    app = PySide6.QtWidgets.QApplication.instance()
+    if app is None:
+        raise RuntimeError('QApplication instance not available')
+    clipboard = app.clipboard()
     mode = clipboard.Clipboard
     clipboard.clear(mode=mode)
     clipboard.setText(text, mode=mode)
